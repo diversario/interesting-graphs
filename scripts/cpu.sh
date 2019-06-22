@@ -6,7 +6,8 @@ cpus=$(nproc)
 from=${1:-50000}
 to=${2:-500000}
 
-max_file_size=${3:-5000000000}
+max_file_size=${3:-1000000000}
+max_mem_size=${4:-1000000000}
 
 while true; do
   for i in $(seq 1 $cpus); do
@@ -15,16 +16,24 @@ while true; do
     echo "Calculating: $(cat commands)"
   done
 
-  idle=$(echo "$(shuf -i 0-3 -n 1).$(shuf -i 1-9 -n 1)")
-
   parallel -j $cpus < commands > /dev/null
 
-  filesize=$(shuf -i 1000000-$max_file_size -n 1)
-  fallocate -l $filesize bigfile
-  dd if=bigfile of=/dev/null
+  file_size=$(shuf -i 1 $max_file_size -n 1)
+
+  idle=$(echo "$(shuf -i 0-20 -n 1).$(shuf -i 1-9 -n 1)"); sleep $idle
+
+  dd count=$file_size if=/dev/urandom of=/dev/null
+
+  idle=$(echo "$(shuf -i 0-20 -n 1).$(shuf -i 1-9 -n 1)"); sleep $idle
+
+  mem_size=$(shuf -i 1 $max_mem_size -n 1)
+
+  memory=$(dd count=$mem_size if=/dev/urandom)
+
+  idle=$(echo "$(shuf -i 0-20 -n 1).$(shuf -i 1-9 -n 1)"); sleep $idle
 
   echo '' > commands
-  echo '' > bigfile
+  # echo '' > /tmp/bigfile
 
-  sleep $idle
+  memory=''
 done
