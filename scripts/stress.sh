@@ -32,9 +32,10 @@ while true; do
   stress-ng --udp $cpus --timeout $(echo "$(shuf -i 0-10 -n 1).$(shuf -i 1-9 -n 1)")
   # idle=$(echo "$(shuf -i 0-20 -n 1).$(shuf -i 1-9 -n 1)"); sleep $idle
 
-  stress-ng --vm 8 --vm-bytes 4G --mmap 2 --mmap-bytes 4G --page-in --timeout $(echo "$(shuf -i 0-10 -n 1).$(shuf -i 1-9 -n 1)")
+  # stress-ng --vm 8 --vm-bytes 4G --mmap 2 --mmap-bytes 4G --page-in --timeout $(echo "$(shuf -i 0-10 -n 1).$(shuf -i 1-9 -n 1)")
   # idle=$(echo "$(shuf -i 0-20 -n 1).$(shuf -i 1-9 -n 1)"); sleep $idle
 
-  stress-ng --brk 8 --stack 8 --bigheap 8 --bigheap-growth 200M --timeout $(echo "$(shuf -i 0-10 -n 1).$(shuf -i 1-9 -n 1)")
+  # stress-ng --brk 8 --stack 8 --bigheap 8 --bigheap-growth 200M --timeout $(echo "$(shuf -i 0-10 -n 1).$(shuf -i 1-9 -n 1)")
   # idle=$(echo "$(shuf -i 0-20 -n 1).$(shuf -i 1-9 -n 1)"); sleep $idle
+  stress-ng --malloc 8 --malloc-bytes 90% --timeout $(echo "$(shuf -i 1-20 -n 1).$(shuf -i 1-9 -n 1)")
 done
