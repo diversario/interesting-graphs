@@ -4,4 +4,4 @@ RUN apk --no-cache add parallel stress-ng
 COPY scripts/* /app/scripts/
 WORKDIR /app/scripts
 
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["./all.sh"]
