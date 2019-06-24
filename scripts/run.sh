@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # ./cpu.sh $@
-./stress.sh
+./all.sh
